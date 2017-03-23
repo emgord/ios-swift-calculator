@@ -67,5 +67,21 @@ class ViewController: UIViewController {
         display.text = "0"
         displayOperation.text = " "
     }
+    
+    
+    @IBAction func saveToVariable(_ sender: UIButton) {
+        brain.setOperand(variable: sender.currentTitle!)
+        print("saveToVariable")
+    }
+   
+    @IBAction func setStorageMode(_ sender: UIButton) {
+        brain.storageMode = !brain.storageMode
+        if brain.storageMode {
+            sender.backgroundColor = .blue
+        } else {
+            sender.backgroundColor = .green
+        }
+    }
+
 }
 

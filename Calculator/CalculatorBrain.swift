@@ -28,6 +28,11 @@ func changeSign(_ number: Double) -> Double {
 
 struct CalculatorBrain {
     
+    private var X: Double?
+    private var Y: Double?
+    
+    var storageMode = false
+    
     private var accumulator: Double?
     
     private var isPending = true
@@ -51,7 +56,7 @@ struct CalculatorBrain {
         "abs": Operation.unaryOperation(abs),
         "!" : Operation.unaryOperation(factorial),
         "²": Operation.unaryOperation(square),
-        "x": Operation.binaryOperation({ $0 * $1 }),
+        "*": Operation.binaryOperation({ $0 * $1 }),
         "/": Operation.binaryOperation({ $0 / $1 }),
         "+": Operation.binaryOperation({ $0 + $1 }),
         "-": Operation.binaryOperation({ $0 - $1 }),
@@ -117,6 +122,41 @@ struct CalculatorBrain {
         
     }
     
+    mutating func setOperand(variable named: String) {
+        
+        if storageMode {
+            switch named {
+            case "X":
+                X = result
+            case "Y":
+                Y = result
+            default:
+                break
+            }
+        } else {
+            switch named {
+            case "X":
+                print("X: \(X)")
+                if let operand = X {
+                    setOperand(operand)
+                }
+
+                print("result: \(result)")
+
+            case "Y":
+                print("Y: \(Y)")
+                if let operand = Y {
+                    setOperand(operand)
+                }
+                print("result: \(result)")
+
+            default:
+                break
+            }
+        }
+        
+    }
+    
     var result: Double? {
         get {
             return accumulator
@@ -134,4 +174,5 @@ struct CalculatorBrain {
             return operationString
         }
     }
+    
 }
